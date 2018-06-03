@@ -1,6 +1,7 @@
 <?php
 
 define('DIR', '/bookmarks');
+define('EXTENSIONS', ['.desktop', '.URL', '.url']);
 
 /**
  * View tree
@@ -10,13 +11,11 @@ define('DIR', '/bookmarks');
  */
 function viewTree($dir=DIR) {
     echo '<ul id="explorer">';
-
     foreach (getContentTree($dir) as $item) {
         echo '<li>';
         view($item);
         echo '</li>';
     }
-
     echo '</ul>';
 }
 
@@ -32,7 +31,18 @@ function getContentTree($dir){
     $items = array_diff(scandir($path), $exclude_list);
     // exclude hidden files
     $items = array_filter($items, create_function('$a','return ($a[0]!=".");'));
+
+    $items = orderItemsDir($items);
     return ($items);
+}
+
+function orderItemsDir($items){
+    usort($items, function($a, $b) {
+        foreach (EXTENSIONS as $value) {
+            return strpos($a, $value) < strpos($b, '.desktop');
+        }
+    });
+    return($items);
 }
 
 /**
@@ -108,8 +118,8 @@ function renderDirName($name, $linkItem){
  * @return string name or void
  */
 function cleanFilename($name){
-    $strToClean = ['.desktop', '.URL', '.url'];
-    foreach ($strToClean as $value) {
+
+    foreach (EXTENSIONS as $value) {
         if(strpos($name, $value) !== false){
             $name=substr($name, 0, -strlen($value));
             return $name;
