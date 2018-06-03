@@ -31,17 +31,25 @@ function getContentTree($dir){
     $items = array_diff(scandir($path), $exclude_list);
     // exclude hidden files
     $items = array_filter($items, create_function('$a','return ($a[0]!=".");'));
-
-    $items = orderItemsDir($items);
+    $items = sortItemsDir($items);
     return ($items);
 }
 
-function orderItemsDir($items){
-    usort($items, function($a, $b) {
+/**
+* sort items and folders
+*
+* @param array $items
+* @return array $items
+*/
+function sortItemsDir($items){
+    foreach ($items as $key => $item) {
         foreach (EXTENSIONS as $value) {
-            return strpos($a, $value) < strpos($b, '.desktop');
+            if(strpos($item, $value) !== false){
+                unset($items[$key]);
+                array_push($items, $item);
+            }
         }
-    });
+    }
     return($items);
 }
 
