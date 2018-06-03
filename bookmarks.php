@@ -10,11 +10,13 @@ define('DIR', '/bookmarks');
  */
 function viewTree($dir=DIR) {
     echo '<ul id="explorer">';
-    foreach (getContentTree($dir) as $i => $item) {
+
+    foreach (getContentTree($dir) as $item) {
         echo '<li>';
         view($item);
         echo '</li>';
     }
+
     echo '</ul>';
 }
 
@@ -39,15 +41,15 @@ function getContentTree($dir){
 * @param string $item filename
 * @return string Html
 */
-function view($item, $dir=null) {
+function view($item, $dirPath=null) {
     // get path
-    if ($dir) {
-        $linkItem = DIR.'/'.$dir.'/'.$item;
-
+    if ($dirPath) {
+        $pathItem = $dirPath.'/'.$item;
+        $linkItem = str_replace(getcwd(), "", $pathItem);
     } else {
         $linkItem = DIR.'/'.$item;
+        $pathItem = getcwd().$linkItem;
     }
-    $pathItem = getcwd().$linkItem;
 
     // rendering
     if (is_dir($pathItem)) {
@@ -55,7 +57,7 @@ function view($item, $dir=null) {
         echo '<ul>';
         foreach (getContentTree($linkItem) as $elm) {
             echo '<li>';
-            view($elm, $item);
+            view($elm, $pathItem);
             echo '</li>';
         }
         echo '</ul>';
@@ -79,7 +81,7 @@ function renderLink($item, $pathItem){
         }
     }
     $item =cleanFilename($item);
-    //render
+    // rendering
     echo '<a class="item" href="'.$url.'" target="_blank" /><span>'.$item.'</span></a>';
 }
 
@@ -90,16 +92,14 @@ function renderLink($item, $pathItem){
  * @return string name
  */
 function cleanFilename($name){
-    if(strpos($name, '.desktop') !== false){
-            $name=substr($name, 0, -8);
+    $strToClean = ['.desktop', '.URL', '.url'];
+    foreach ($strToClean as $value) {
+        if(strpos($name, $value) !== false){
+            $name=substr($name, 0, -strlen($value));
+            return $name;
+        }
     }
-    if(strpos($name, '.URL') !== false){
-            $name=substr($name, 0, -4);
-    }
-    if(strpos($name, '.url') !== false){
-            $name=substr($name, 0, -4);
-    }
-    return $name;
+    return;
 }
 
 viewTree();
