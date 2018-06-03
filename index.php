@@ -6,6 +6,9 @@
   </head>
   <body>
     <h1>Bookmarks</h1>
-    <?php include('bookmarks.php'); ?>
+    <?php
+        include('bookmarks.php');
+        viewTree();
+    ?>
   </body>
 </html>

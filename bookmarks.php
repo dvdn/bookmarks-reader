@@ -1,6 +1,7 @@
 <?php
 
 define('DIR', '/bookmarks');
+define('EXTENSIONS', ['.desktop', '.URL', '.url']);
 
 /**
  * View tree
@@ -10,7 +11,7 @@ define('DIR', '/bookmarks');
  */
 function viewTree($dir=DIR) {
     echo '<ul id="explorer">';
-    foreach (getContentTree($dir) as $i => $item) {
+    foreach (getContentTree($dir) as $item) {
         echo '<li>';
         view($item);
         echo '</li>';
@@ -30,32 +31,43 @@ function getContentTree($dir){
     $items = array_diff(scandir($path), $exclude_list);
     // exclude hidden files
     $items = array_filter($items, create_function('$a','return ($a[0]!=".");'));
+
+    $items = orderItemsDir($items);
     return ($items);
+}
+
+function orderItemsDir($items){
+    usort($items, function($a, $b) {
+        foreach (EXTENSIONS as $value) {
+            return strpos($a, $value) < strpos($b, '.desktop');
+        }
+    });
+    return($items);
 }
 
 /**
 * View item
 *
 * @param string $item filename
+* @param string $dirPath relative path
 * @return string Html
 */
-function view($item, $dir=null) {
+function view($item, $dirPath=null) {
     // get path
-    if ($dir) {
-        $linkItem = DIR.'/'.$dir.'/'.$item;
-
+    if ($dirPath) {
+        $pathItem = $dirPath.'/'.$item;
+        $linkItem = str_replace(getcwd(), "", $pathItem);
     } else {
         $linkItem = DIR.'/'.$item;
+        $pathItem = getcwd().$linkItem;
     }
-    $pathItem = getcwd().$linkItem;
-
     // rendering
     if (is_dir($pathItem)) {
-        echo '<h2>'.$item.'</h2>';
+        renderDirName($item, $linkItem);
         echo '<ul>';
         foreach (getContentTree($linkItem) as $elm) {
             echo '<li>';
-            view($elm, $item);
+            view($elm, $pathItem);
             echo '</li>';
         }
         echo '</ul>';
@@ -65,9 +77,10 @@ function view($item, $dir=null) {
 }
 
 /**
- * Get renderLink
+ * Render link
  *
- * @param string $item name, $pathItem path,
+ * @param string $item name
+ * @param string $pathItem absolute
  * @return string Html
  */
 function renderLink($item, $pathItem){
@@ -79,28 +92,37 @@ function renderLink($item, $pathItem){
         }
     }
     $item =cleanFilename($item);
-    //render
+    // rendering
     echo '<a class="item" href="'.$url.'" target="_blank" /><span>'.$item.'</span></a>';
+}
+
+/**
+ * Render Dir Name
+ *
+ * @param string $name
+ * @param string $linkItem relative path
+ * @return string Html
+ */
+function renderDirName($name, $linkItem){
+    $arrayDepth = explode ('/', str_replace(DIR, "", $linkItem));
+
+    $depth = sizeof($arrayDepth);
+    echo '<h'.$depth.'>'.$name.'</h'.$depth.'>';
 }
 
 /**
  * Clean Filename
  *
  * @param string $name name
- * @return string name
+ * @return string name or void
  */
 function cleanFilename($name){
-    if(strpos($name, '.desktop') !== false){
-            $name=substr($name, 0, -8);
+    foreach (EXTENSIONS as $value) {
+        if(strpos($name, $value) !== false){
+            $name=substr($name, 0, -strlen($value));
+            return $name;
+        }
     }
-    if(strpos($name, '.URL') !== false){
-            $name=substr($name, 0, -4);
-    }
-    if(strpos($name, '.url') !== false){
-            $name=substr($name, 0, -4);
-    }
-    return $name;
+    return;
 }
-
-viewTree();
 ?>
