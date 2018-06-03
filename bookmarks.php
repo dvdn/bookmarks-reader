@@ -39,6 +39,7 @@ function getContentTree($dir){
 * View item
 *
 * @param string $item filename
+* @param string $dirPath relative path
 * @return string Html
 */
 function view($item, $dirPath=null) {
@@ -53,7 +54,7 @@ function view($item, $dirPath=null) {
 
     // rendering
     if (is_dir($pathItem)) {
-        echo '<h2>'.$item.'</h2>';
+        renderDirName($item, $linkItem);
         echo '<ul>';
         foreach (getContentTree($linkItem) as $elm) {
             echo '<li>';
@@ -67,9 +68,10 @@ function view($item, $dirPath=null) {
 }
 
 /**
- * Get renderLink
+ * Render link
  *
- * @param string $item name, $pathItem path,
+ * @param string $item name
+ * @param string $pathItem absolute
  * @return string Html
  */
 function renderLink($item, $pathItem){
@@ -86,10 +88,24 @@ function renderLink($item, $pathItem){
 }
 
 /**
+ * Render Dir Name
+ *
+ * @param string $name
+ * @param string $linkItem relative path
+ * @return string Html
+ */
+function renderDirName($name, $linkItem){
+    $arrayDepth = explode ('/', str_replace(DIR, "", $linkItem));
+
+    $depth = sizeof($arrayDepth);
+    echo '<h'.$depth.'>'.$name.'</h'.$depth.'>';
+}
+
+/**
  * Clean Filename
  *
  * @param string $name name
- * @return string name
+ * @return string name or void
  */
 function cleanFilename($name){
     $strToClean = ['.desktop', '.URL', '.url'];
