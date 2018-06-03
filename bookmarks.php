@@ -61,7 +61,6 @@ function view($item, $dirPath=null) {
         $linkItem = DIR.'/'.$item;
         $pathItem = getcwd().$linkItem;
     }
-
     // rendering
     if (is_dir($pathItem)) {
         renderDirName($item, $linkItem);
@@ -118,7 +117,6 @@ function renderDirName($name, $linkItem){
  * @return string name or void
  */
 function cleanFilename($name){
-
     foreach (EXTENSIONS as $value) {
         if(strpos($name, $value) !== false){
             $name=substr($name, 0, -strlen($value));
@@ -127,6 +125,4 @@ function cleanFilename($name){
     }
     return;
 }
-
-viewTree();
 ?>
