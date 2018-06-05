@@ -1,7 +1,10 @@
 <?php
 
 define('DIR', '/bookmarks');
-define('EXTENSIONS', ['.desktop', '.URL', '.url']);
+/* define an array */
+function listExtensions(){
+    return ['.desktop', '.URL', '.url'];
+}
 
 /**
  * View tree
@@ -43,14 +46,14 @@ function getContentTree($dir){
 */
 function sortItemsDir($items){
     foreach ($items as $key => $item) {
-        foreach (EXTENSIONS as $value) {
+        foreach (listExtensions() as $value) {
             if(strpos($item, $value) !== false){
                 unset($items[$key]);
                 array_push($items, $item);
             }
         }
     }
-    return($items);
+    return $items;
 }
 
 /**
@@ -125,7 +128,7 @@ function renderDirName($name, $linkItem){
  * @return string name or void
  */
 function cleanFilename($name){
-    foreach (EXTENSIONS as $value) {
+    foreach (listExtensions() as $value) {
         if(strpos($name, $value) !== false){
             $name=substr($name, 0, -strlen($value));
             return $name;
@@ -133,4 +136,5 @@ function cleanFilename($name){
     }
     return;
 }
+
 ?>

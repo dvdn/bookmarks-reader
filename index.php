@@ -3,6 +3,11 @@
   <head>
     <meta charset="utf-8">
     <title>Bookmarks reader</title>
+    <style>
+      ul, li {
+          padding-bottom: .5em;
+      }
+    </style>
   </head>
   <body>
     <h1>Bookmarks</h1>
