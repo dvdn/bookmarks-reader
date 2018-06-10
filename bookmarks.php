@@ -3,7 +3,7 @@
 define('DIR', '/bookmarks');
 /* define an array */
 function listExtensions(){
-    return ['.desktop', '.URL', '.url'];
+    return array ('.desktop', '.URL', '.url', '.mht');
 }
 
 /**
@@ -72,6 +72,7 @@ function view($item, $dirPath=null) {
         $linkItem = DIR.'/'.$item;
         $pathItem = getcwd().$linkItem;
     }
+
     // rendering
     if (is_dir($pathItem)) {
         renderDirName($item, $linkItem);
@@ -82,8 +83,18 @@ function view($item, $dirPath=null) {
             echo '</li>';
         }
         echo '</ul>';
-    } else {
-        renderLink($item, $pathItem);
+    } else {        
+        if(strpos($item, '.mht') == false) {
+            $link = getUrl($item, $pathItem);
+        } else {
+            //$link = 'file:///'.$pathItem;
+            $link = $_SERVER["REQUEST_URI"].$linkItem;
+            /* var_dump($linkItem, '<br>');
+            var_dump($pathItem, '<br>');
+            var_dump($dirPath, '<br>');
+            var_dump($_SERVER["REQUEST_URI"], '<br>');*/
+        }
+        renderLink($item, $link);
     }
 }
 
@@ -95,16 +106,18 @@ function view($item, $dirPath=null) {
  * @return string Html
  */
 function renderLink($item, $pathItem){
-    // extract url from file
+   $item =cleanFilename($item);
+    // rendering
+    echo '<a class="item" href="'.$pathItem.'" target="_blank" download="filename" /><span>'.$item.'</span></a>';
+}
+
+// extract url from file
+function getUrl($item, $pathItem){
     foreach (file($pathItem) as $value) {
         if(strpos($value, 'URL=') !== false){
-            $url=substr($value,4);
-            break;
+            return substr($value,4);
         }
     }
-    $item =cleanFilename($item);
-    // rendering
-    echo '<a class="item" href="'.$url.'" target="_blank" /><span>'.$item.'</span></a>';
 }
 
 /**
@@ -131,8 +144,8 @@ function cleanFilename($name){
     foreach (listExtensions() as $value) {
         if(strpos($name, $value) !== false){
             $name=substr($name, 0, -strlen($value));
-            return $name;
         }
+        return $name;
     }
     return;
 }
