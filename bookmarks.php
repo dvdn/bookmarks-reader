@@ -11,10 +11,9 @@ function listExtensions(){
 /**
  * View tree
  *
- * @param string $dir name
  * @return string Html
  */
-function viewTree($dir=DIR) {
+function viewTree() {
     $citem = new Item(DIR, getcwd().DIR);
     $citem->viewDir();
 }
