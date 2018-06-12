@@ -7,10 +7,11 @@ class Item{
     public function __construct($name, $path){
         $this->name=$name;
         $this->path=$path;
+        //todo bad rawPath method if DIR
         $this->rawPath=$path.'/'.$name;
     }
 
-    public function getname(){
+    public function getName(){
         return $this->name;
     }
 
@@ -35,38 +36,34 @@ class Item{
         }
     }
 
-    public function renderFile() {
+    public function viewFile($parentDir = DIR) {
 
-/*if(strpos($item, '.mht') == false) {
-            $link = getUrl($item, $pathItem);
+        if(strpos($this->name, '.mht') == false) {
+            $link = $this->getInfo();
         } else {
-            $link = $_SERVER["REQUEST_URI"].$linkItem;
-        }*/
-
-    // rendering
-    echo '<a class="item" href="'.$this->getInfo().'" target="_blank" download="filename" /><span>'.cleanFilename($this->name).'</span></a>';
+            $link = $_SERVER['REQUEST_URI'].str_replace(getcwd(), '', $this->rawPath);
+        }
+        echo '<a class="item" href="'.$link.'" target="_blank" download="filename" /><span>'.cleanFilename($this->name).'</span></a>';
     }
 
-    public function renderDir($isRoot=false) {
-        if ($isRoot) {
+    public function viewDir() {
+        // if root DIR
+        if ($this->name === DIR) {
             $path = getcwd().DIR;
         } else {
             $path = $this->rawPath;
+            echo '<h2>'.$this->name.'</h2>';
         }
-    echo '<h2>'.$this->name.'</h2>';
-    echo '<ul>';
+        echo '<ul>';
         foreach (getContentTree($path) as $elm) {
-
-            
             $child = new Item($elm, $path);
             if ($child->isDir()) {
-                $child->renderDir();
+                $child->viewDir();
             } elseif ($child->isFile()) {
                 echo '<li>';
-                $child->renderFile();
-                echo '</li>'; 
+                $child->viewFile();
+                echo '</li>';
             };
-           
         }
         echo '</ul>';
     }

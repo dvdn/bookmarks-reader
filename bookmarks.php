@@ -1,7 +1,6 @@
 <?php
 
-        require('Item.php');
-
+require('Item.php');
 
 define('DIR', '/bookmarks');
 /* define an array */
@@ -16,32 +15,8 @@ function listExtensions(){
  * @return string Html
  */
 function viewTree($dir=DIR) {
-
-    $citem = new Item(DIR, getcwd().$dir);
-    $citem->renderDir(true);
-
-    /*echo '<ul id="explorer">';
-    foreach (getContentTree($dir) as $item) {
-
-        $citem = new Item($item, getcwd().$dir);
-
-        
-        if ($citem->isDir()) {
-            $citem->renderDir();
-         } elseif ($citem->isFile()) {
-            echo '<li>';
-            $citem->renderFile();
-        //view($item);
-        echo '</li>';
-            
-         };
-        
-
-        
-    }
-    echo '</ul>';
-
-    die;*/
+    $citem = new Item(DIR, getcwd().DIR);
+    $citem->viewDir();
 }
 
 /**
@@ -52,7 +27,7 @@ function viewTree($dir=DIR) {
  */
 function getContentTree($dir=DIR){
     if ($dir===DIR){
-        $dir = getcwd().$dir;
+        $dir = getcwd().DIR;
     }
     $exclude_list = array(".", "..");
     $items = array_diff(scandir($dir), $exclude_list);
