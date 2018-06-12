@@ -7,7 +7,6 @@ class Item{
     public function __construct($name, $path){
         $this->name=$name;
         $this->path=$path;
-        //todo bad rawPath method if DIR
         $this->rawPath=$path.'/'.$name;
     }
 
@@ -36,8 +35,7 @@ class Item{
         }
     }
 
-    public function viewFile($parentDir = DIR) {
-
+    public function viewFile() {
         if(strpos($this->name, '.mht') == false) {
             $link = $this->getInfo();
         } else {

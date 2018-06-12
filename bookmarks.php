@@ -37,7 +37,7 @@ function getContentTree($dir=DIR){
 }
 
 /**
-* sort items and folders
+* Sort items and folders
 *
 * @param array $items
 * @return array $items
