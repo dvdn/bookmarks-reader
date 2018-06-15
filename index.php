@@ -11,13 +11,9 @@
   </head>
   <body>
     <h1>Bookmarks</h1>
-        <?php
-        // PHP debug mode
-        //error_reporting(E_ALL);
-        //ini_set('display_errors', 1);
-
+      <?php
         include('bookmarks.php');
         viewTree();
-    ?>
+      ?>
   </body>
 </html>

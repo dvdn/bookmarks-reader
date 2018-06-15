@@ -26,7 +26,7 @@ class Item{
         return is_file($this->rawPath);
     }
 
-    public function getInfo($info='URL'){
+    public function getInfo($info){
         $nbSub = strlen($info)+1;
         foreach (file($this->rawPath) as $value) {
             if(strpos($value, $info.'=') !== false){
@@ -36,8 +36,13 @@ class Item{
     }
 
     public function viewFile() {
+        // Link to something or mht file
         if(strpos($this->name, '.mht') == false) {
-            $link = $this->getInfo();
+            if($this->getInfo('BASEURL')){
+                $link = $this->getInfo('BASEURL');
+            } else {
+                $link = $this->getInfo('URL');
+            }
         } else {
             $link = $_SERVER['REQUEST_URI'].str_replace(getcwd(), '', $this->rawPath);
         }
