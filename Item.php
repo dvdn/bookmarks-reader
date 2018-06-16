@@ -50,20 +50,22 @@ class Item{
     }
 
     public function viewDir() {
+echo '<ul >';
         // if root DIR
         if ($this->name === DIR) {
             $path = getcwd().DIR;
         } else {
             $path = $this->rawPath;
-            echo '<h2>'.$this->name.'</h2>';
+            $toggleId = uniqid();
+            echo '<input type="checkbox" class="toggle" id="'.$toggleId.'"  checked="checked"/> <label class="toggle-label" for="'.$toggleId.'" >'.$this->name.'</label>';
         }
-        echo '<ul>';
+
         foreach (getContentTree($path) as $elm) {
             $child = new Item($elm, $path);
             if ($child->isDir()) {
                 $child->viewDir();
             } elseif ($child->isFile()) {
-                echo '<li>';
+                echo '<li class="fold">';
                 $child->viewFile();
                 echo '</li>';
             };
