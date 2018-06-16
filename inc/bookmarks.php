@@ -4,8 +4,12 @@ require('Item.php');
 
 define('DIR', '/bookmarks');
 /* define an array */
-function listExtensions(){
-    return array ('.desktop', '.URL', '.url', '.mht');
+function listExtensions($linksOnly=false) {
+    if ($linksOnly) {
+        return array ('.desktop', '.URL', '.url');
+    } else {
+        return array ('.desktop', '.URL', '.url', '.mht');
+    }
 }
 
 /**
@@ -14,8 +18,8 @@ function listExtensions(){
  * @return string Html
  */
 function viewTree() {
-    $citem = new Item(DIR, getcwd().DIR);
-    $citem->viewDir();
+    $item = new Item(DIR, getcwd().DIR);
+    $item->viewDir();
 }
 
 /**
@@ -24,8 +28,8 @@ function viewTree() {
  * @param string $dir name
  * @return array
  */
-function getContentTree($dir=DIR){
-    if ($dir===DIR){
+function getContentTree($dir=DIR) {
+    if ($dir===DIR) {
         $dir = getcwd().DIR;
     }
     $exclude_list = array(".", "..");
@@ -42,10 +46,10 @@ function getContentTree($dir=DIR){
 * @param array $items
 * @return array $items
 */
-function sortItemsDir($items){
+function sortItemsDir($items) {
     foreach ($items as $key => $item) {
         foreach (listExtensions() as $value) {
-            if(strpos($item, $value) !== false){
+            if(strpos($item, $value) !== false) {
                 unset($items[$key]);
                 array_push($items, $item);
             }
@@ -61,7 +65,7 @@ function sortItemsDir($items){
  * @param string $linkItem relative path
  * @return string Html
  */
-function renderDirName($name, $linkItem){
+function renderDirName($name, $linkItem) {
     $arrayDepth = explode ('/', str_replace(DIR, "", $linkItem));
     $depth = sizeof($arrayDepth);
     echo '<h'.$depth.'>'.$name.'</h'.$depth.'>';
@@ -73,13 +77,13 @@ function renderDirName($name, $linkItem){
  * @param string $name name
  * @return string name or void
  */
-function cleanFilename($name){
-    foreach (listExtensions() as $value) {
-        if(strpos($name, $value) !== false){
+function cleanFilename($name) {
+    foreach (listExtensions(true) as $value) {
+        if(strpos($name, $value) !== false) {
             $name=substr($name, 0, -strlen($value));
         }
-        return $name;
     }
+    return $name;
 }
 
 ?>
