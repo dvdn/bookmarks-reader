@@ -37,11 +37,7 @@ body>ul {
 .toggle-label:hover, .toggle:not(:checked) ~ .toggle-label {
   color: #e50;
 }
-.toggle-label:hover ~ ul, .toggle-label:hover ~ .fold {
-  border-left: 1px dotted lightgrey;
-}
 .fold {
-  line-height: 1.8em;
   border-left: 1px dotted lightgrey;
   border-bottom: 1px dotted lightgrey;
   font-size: .9em;
@@ -49,8 +45,12 @@ body>ul {
   -moz-transition: all 0.2s linear;
   transition: all 0.2s linear;
 }
+body>ul>.fold.dir {
+  border-left: 1px dotted white;
+  border-bottom: 1px dotted white;
+}
 .toggle:checked ~ .fold {
-  margin-top: -25px;
+  margin-top: -20px;
   -webkit-transform: perspective(0) rotateX(-90deg);
   -moz-transform: perspective(0) rotateX(-90deg);
   transform: perspective(0) rotateX(-90deg);

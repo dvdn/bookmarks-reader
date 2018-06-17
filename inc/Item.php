@@ -62,12 +62,13 @@ class Item {
         foreach (getContentTree($path) as $elm) {
             $child = new Item($elm, $path);
             if ($child->isDir()) {
+                echo '<li class="fold dir">';
                 $child->viewDir();
             } elseif ($child->isFile()) {
                 echo '<li class="fold">';
                 $child->viewFile();
-                echo '</li>';
             };
+            echo '</li>';
         }
         echo '</ul>';
     }
