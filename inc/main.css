@@ -45,12 +45,14 @@ body>ul {
   -moz-transition: all 0.2s linear;
   transition: all 0.2s linear;
 }
+.fold.dir {
+  padding: 0;
+}
 body>ul>.fold.dir {
-  border-left: 1px dotted white;
-  border-bottom: 1px dotted white;
+  border: 0;
 }
 .toggle:checked ~ .fold {
-  margin-top: -20px;
+  margin-top: -22px;
   -webkit-transform: perspective(0) rotateX(-90deg);
   -moz-transform: perspective(0) rotateX(-90deg);
   transform: perspective(0) rotateX(-90deg);
