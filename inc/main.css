@@ -16,7 +16,6 @@ ul, li {
   padding-left: 1.2em;
 }
 ul {
-  margin-bottom: 1em;
   border-left: 1px dotted white;
   padding-bottom: 0.5em;
 }
@@ -29,9 +28,6 @@ body>ul {
   display: none;
 }
 .toggle-label {
-  display: block;
-  font-size: 1em;
-  margin: 0.5em 0;
   cursor: pointer;
 }
 .toggle-label:hover, .toggle:not(:checked) ~ .toggle-label {
@@ -40,13 +36,13 @@ body>ul {
 .fold {
   border-left: 1px dotted lightgrey;
   border-bottom: 1px dotted lightgrey;
-  font-size: .9em;
+  font-size: 14px;
   -webkit-transition: all 0.2s linear;
   -moz-transition: all 0.2s linear;
   transition: all 0.2s linear;
 }
-.fold.dir {
-  padding: 0;
+.toggle-label, .fold.dir {
+  padding: 1px 0 8px;
 }
 body>ul>.fold.dir {
   border: 0;
