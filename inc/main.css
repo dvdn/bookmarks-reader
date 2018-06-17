@@ -28,6 +28,7 @@ body>ul {
   display: none;
 }
 .toggle-label {
+  font-weight: bold;
   cursor: pointer;
 }
 .toggle-label:hover, .toggle:not(:checked) ~ .toggle-label {
