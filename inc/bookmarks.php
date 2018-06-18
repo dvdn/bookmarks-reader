@@ -3,6 +3,8 @@
 require('Item.php');
 
 define('DIR', 'bookmarks');
+define('CWDIR', getcwd().'/');
+
 /* define an array */
 function listExtensions($linksOnly=false) {
     if ($linksOnly) {
