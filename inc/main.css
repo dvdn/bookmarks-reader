@@ -1,0 +1,56 @@
+body {
+  font-family: sans-serif;
+  color: gray;
+}
+h1 {
+  font-size: 1.2em;
+}
+a {
+  text-decoration: none;
+}
+a:hover , a:active {
+  text-decoration: underline;
+}
+ul, li {
+  list-style: none;
+  padding-left: 1.2em;
+}
+ul {
+  border-left: 1px dotted white;
+  padding-bottom: 0.5em;
+}
+body>ul {
+  border: 0;
+  width: 95%;
+  margin: auto;
+}
+.toggle {
+  display: none;
+}
+.toggle-label {
+  font-weight: bold;
+  cursor: pointer;
+}
+.toggle-label:hover, .toggle:not(:checked) ~ .toggle-label {
+  color: #e50;
+}
+.fold {
+  border-left: 1px dotted lightgrey;
+  border-bottom: 1px dotted lightgrey;
+  font-size: 14px;
+  -webkit-transition: all 0.2s linear;
+  -moz-transition: all 0.2s linear;
+  transition: all 0.2s linear;
+}
+.toggle-label, .fold.dir {
+  padding: 1px 0 8px;
+}
+body>ul>.fold.dir {
+  border: 0;
+}
+.toggle:checked ~ .fold {
+  margin-top: -22px;
+  -webkit-transform: perspective(0) rotateX(-90deg);
+  -moz-transform: perspective(0) rotateX(-90deg);
+  transform: perspective(0) rotateX(-90deg);
+}

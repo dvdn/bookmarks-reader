@@ -3,17 +3,13 @@
   <head>
     <meta charset="utf-8">
     <title>Bookmarks reader</title>
-    <style>
-      ul, li {
-          padding-bottom: .5em;
-      }
-    </style>
+    <link rel="stylesheet" href="inc/main.css">
   </head>
   <body>
-    <h1>Bookmarks</h1>
-    <?php
-        include('bookmarks.php');
+    <h1>My bookmarks</h1>
+      <?php
+        include('inc/bookmarks.php');
         viewTree();
-    ?>
+      ?>
   </body>
 </html>
