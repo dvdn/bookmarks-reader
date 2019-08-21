@@ -36,8 +36,13 @@ class Item {
     }
 
     public function viewFile() {
+        
+        $download = '';
+        $cleanName = cleanFilename($this->name);
+
         // Link to something or mht file
-        if(strpos($this->name, '.mht') == false) {
+        //if(strpos($this->name, '.mht') == false) {
+        if($this->getInfo('URL') or $this->getInfo('BASEURL')) {	
             if($this->getInfo('BASEURL')) {
                 $link = $this->getInfo('BASEURL');
             } else {
@@ -45,8 +50,9 @@ class Item {
             }
         } else {
             $link = $_SERVER['REQUEST_URI'].str_replace(getcwd(), '', $this->rawPath);
+            $download = 'download="'.$cleanName.'"';
         }
-        echo '<a class="item" href="'.$link.'" target="_blank" download="filename" /><span>'.cleanFilename($this->name).'</span></a>';
+        echo '<a class="item" href="'.$link.'" target="_blank" '.$download.' /><span>'.$cleanName.'</span></a>';
     }
 
     public function viewDir() {
