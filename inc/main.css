@@ -16,6 +16,7 @@ ul, li {
   padding-left: 1.2em;
 }
 ul {
+  margin-bottom: 1em;
   border-left: 1px dotted white;
   padding-bottom: 0.5em;
 }
@@ -28,29 +29,35 @@ body>ul {
   display: none;
 }
 .toggle-label {
-  font-weight: bold;
+  display: block;
+  font-size: 1em;
+  margin: 0.5em 0;
   cursor: pointer;
 }
 .toggle-label:hover, .toggle:not(:checked) ~ .toggle-label {
   color: #e50;
 }
+.toggle-label:hover ~ ul, .toggle-label:hover ~ .fold {
+  border-left: 1px dotted lightgrey;
+}
 .fold {
+  line-height: 1.8em;
   border-left: 1px dotted lightgrey;
   border-bottom: 1px dotted lightgrey;
-  font-size: 14px;
+  font-size: .9em;
   -webkit-transition: all 0.2s linear;
   -moz-transition: all 0.2s linear;
   transition: all 0.2s linear;
 }
-.toggle-label, .fold.dir {
-  padding: 1px 0 8px;
-}
-body>ul>.fold.dir {
-  border: 0;
-}
 .toggle:checked ~ .fold {
-  margin-top: -22px;
+  margin-top: -25px;
   -webkit-transform: perspective(0) rotateX(-90deg);
   -moz-transform: perspective(0) rotateX(-90deg);
   transform: perspective(0) rotateX(-90deg);
+}
+footer{
+    margin-top: 5em;
+    font-size: 0.8em;
+    line-height: 2.2em;
+    float: right;
 }
