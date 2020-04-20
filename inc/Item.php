@@ -45,12 +45,12 @@ class Item {
                 $link = $this->getInfo('BASEURL');
             } else {
                 $link = $this->getInfo('URL');
-            }            
+            }
         } else {
             $link = $_SERVER['REQUEST_URI'].str_replace(getcwd(), '', $this->rawPath);
         }
-
-        echo '<a class="item" href="'.$link.'" target="_blank" download="'.cleanFilename($this->name).'" /><span>'.cleanFilename($this->name).'</span></a>';
+        
+        echo '<a class="item" href="'.$link.'" target="_blank" title="'.$link.'" download="'.cleanFilename($this->name).'" /><span>'.cleanFilename($this->name).'</span></a>';
     }
 
     public function viewDir() {
