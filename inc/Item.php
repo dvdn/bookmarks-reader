@@ -36,17 +36,21 @@ class Item {
     }
 
     public function viewFile() {
-        // Link to something or mht file
-        if(strpos($this->name, '.mht') == false) {
+        // Link to url or a file
+        $array = explode('.', $this->name);
+        $extension = end($array);
+
+        if (in_array('.'.$extension, listExtensions(true))) {
             if($this->getInfo('BASEURL')) {
                 $link = $this->getInfo('BASEURL');
             } else {
                 $link = $this->getInfo('URL');
-            }
+            }            
         } else {
             $link = $_SERVER['REQUEST_URI'].str_replace(getcwd(), '', $this->rawPath);
         }
-        echo '<a class="item" href="'.$link.'" target="_blank" download="filename" /><span>'.cleanFilename($this->name).'</span></a>';
+
+        echo '<a class="item" href="'.$link.'" target="_blank" download="'.cleanFilename($this->name).'" /><span>'.cleanFilename($this->name).'</span></a>';
     }
 
     public function viewDir() {
