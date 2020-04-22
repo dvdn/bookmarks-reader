@@ -7,7 +7,7 @@ Bookmarks-reader searches and displays all links embed in those files on one web
 It supports '.ul', '.URL' or '.desktop' files extensions.
 
 ## How to use it
-Put all your files into '/bookmars' folder.
+Put all your files into 'bookmarks' folder.
 You're done.
 
-You can customize root folder name '/bookmarks' in [bookmars.php](https://github.com/dvdn/bookmarks-reader/blob/master/inc/bookmarks.php#L5 "go to inc/bookmarks.php") file.
+You can customize root folder name 'bookmarks' in [bookmars.php](https://github.com/dvdn/bookmarks-reader/blob/master/inc/bookmarks.php#L5 "go to inc/bookmarks.php") file.

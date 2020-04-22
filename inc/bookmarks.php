@@ -2,7 +2,9 @@
 
 require('Item.php');
 
-define('DIR', '/bookmarks');
+define('DIR', 'bookmarks');
+define('CWDIR', getcwd().'/');
+
 /* define an array */
 function listExtensions($linksOnly=false) {
     if ($linksOnly) {
@@ -28,10 +30,7 @@ function viewTree() {
  * @param string $dir name
  * @return array
  */
-function getContentTree($dir=DIR) {
-    if ($dir===DIR) {
-        $dir = getcwd().DIR;
-    }
+function getContentTree($dir) {
     $exclude_list = array(".", "..");
     $items = array_diff(scandir($dir), $exclude_list);
     // exclude hidden files
