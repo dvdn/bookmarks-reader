@@ -36,13 +36,11 @@ class Item {
     }
 
     public function viewFile() {
-        
-        $download = '';
-        $cleanName = cleanFilename($this->name);
+        // Link to url or a file
+        $array = explode('.', $this->name);
+        $extension = end($array);
 
-        // Link to something or mht file
-        //if(strpos($this->name, '.mht') == false) {
-        if($this->getInfo('URL') or $this->getInfo('BASEURL')) {	
+        if (in_array('.'.$extension, listExtensions(true))) {
             if($this->getInfo('BASEURL')) {
                 $link = $this->getInfo('BASEURL');
             } else {
@@ -50,9 +48,9 @@ class Item {
             }
         } else {
             $link = $_SERVER['REQUEST_URI'].str_replace(getcwd(), '', $this->rawPath);
-            $download = 'download="'.$cleanName.'"';
         }
-        echo '<a class="item" href="'.$link.'" target="_blank" '.$download.' /><span>'.$cleanName.'</span></a>';
+        
+        echo '<a class="item" href="'.$link.'" target="_blank" title="'.$link.'" download="'.cleanFilename($this->name).'" /><span>'.cleanFilename($this->name).'</span></a>';
     }
 
     public function viewDir() {
@@ -63,19 +61,17 @@ class Item {
         } else {
             $path = $this->rawPath;
             $toggleId = uniqid();
-            echo '<input type="checkbox" class="toggle" id="'.$toggleId.'"  checked="checked"/> <label class="toggle-label" for="'.$toggleId.'" >. '.$this->name.'</label>';
+            echo '<input type="checkbox" class="toggle" id="'.$toggleId.'"  checked="checked"/> <label class="toggle-label" for="'.$toggleId.'" >'.$this->name.'</label>';
         }
         foreach (getContentTree($path) as $elm) {
             $child = new Item($elm, $path);
-            echo '<li class="fold';
             if ($child->isDir()) {
-                echo ' dir">';
                 $child->viewDir();
             } elseif ($child->isFile()) {
-                echo '">';
+                echo '<li class="fold">';
                 $child->viewFile();
+                echo '</li>';
             };
-            echo '</li>';
         }
         echo '</ul>';
     }
