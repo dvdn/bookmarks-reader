@@ -34,12 +34,12 @@ class Item {
             }
         }
     }
-
+    
     public function viewFile() {
         // Link to url or a file
         $array = explode('.', $this->name);
         $extension = end($array);
-
+        $attrDownload = "";
         if (in_array('.'.$extension, listExtensions(true))) {
             if($this->getInfo('BASEURL')) {
                 $link = $this->getInfo('BASEURL');
@@ -48,9 +48,9 @@ class Item {
             }
         } else {
             $link = $_SERVER['REQUEST_URI'].str_replace(CWDIR, '', $this->rawPath);
-        }
-        
-        echo '<a class="item" href="'.$link.'" target="_blank" title="'.$link.'" download="'.cleanFilename($this->name).'" /><span>'.cleanFilename($this->name).'</span></a>';
+            $attrDownload = 'download="'.cleanFilename($this->name).'"';
+        }        
+        echo '<a class="item" href="'.$link.'" target="_blank" title="'.$link.'" '.$attrDownload.'/><span>'.cleanFilename($this->name).'</span></a>';
     }
 
     public function viewDir() {
@@ -61,7 +61,7 @@ class Item {
         } else {
             $path = $this->rawPath;
             $toggleId = uniqid();
-            echo '<input type="checkbox" class="toggle" id="'.$toggleId.'"/> <label class="toggle-label" for="'.$toggleId.'" >'.$this->name.'<span class="checkmark"></span></label>';
+            echo '<input type="checkbox" class="toggle" id="'.$toggleId.'"/> <label class="toggle-label" for="'.$toggleId.'" >'.$this->name.'</label>';
         }
         foreach (getContentTree($path) as $elm) {
             $child = new Item($elm, $path);
