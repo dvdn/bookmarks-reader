@@ -9,7 +9,8 @@ a {
   text-decoration: none;
 }
 a:hover , a:active {
-  text-decoration: underline;
+  /*text-decoration: underline;*/
+  text-shadow: 1px 0 black;
 }
 ul, li {
   list-style: none;
@@ -20,6 +21,8 @@ ul, li {
 }
 .toggle-label {
   display: block;
+  position: relative;
+  z-index: 999; /* no interference with clickable children links */
   font-size: 18px;
   margin: 3px 0;
   cursor: pointer;
