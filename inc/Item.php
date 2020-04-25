@@ -34,9 +34,13 @@ class Item {
             }
         }
     }
-    
+
+    /**
+     * Html file as link to url or download ressource
+     *
+     * @return string Html
+     */
     public function viewFile() {
-        // Link to url or a file
         $array = explode('.', $this->name);
         $extension = end($array);
         $attrDownload = "";
@@ -49,10 +53,15 @@ class Item {
         } else {
             $link = $_SERVER['REQUEST_URI'].str_replace(CWDIR, '', $this->rawPath);
             $attrDownload = 'download="'.cleanFilename($this->name).'"';
-        }        
+        }
         echo '<a class="item" href="'.$link.'" target="_blank" title="'.$link.'" '.$attrDownload.'/><span>'.cleanFilename($this->name).'</span></a>';
     }
 
+    /**
+     * Html for directory
+     *
+     * @return string Html
+     */
     public function viewDir() {
         echo '<ul class="fold">';
         // if root DIR
