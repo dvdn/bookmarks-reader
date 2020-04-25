@@ -54,14 +54,14 @@ class Item {
     }
 
     public function viewDir() {
-        echo '<ul>';
+        echo '<ul class="fold">';
         // if root DIR
         if ($this->name === DIR) {
             $path = CWDIR.DIR;
         } else {
             $path = $this->rawPath;
             $toggleId = uniqid();
-            echo '<input type="checkbox" class="toggle" id="'.$toggleId.'"  checked="checked"/> <label class="toggle-label" for="'.$toggleId.'" >'.$this->name.'</label>';
+            echo '<input type="checkbox" class="toggle" id="'.$toggleId.'"/> <label class="toggle-label" for="'.$toggleId.'" >'.$this->name.'<span class="checkmark"></span></label>';
         }
         foreach (getContentTree($path) as $elm) {
             $child = new Item($elm, $path);

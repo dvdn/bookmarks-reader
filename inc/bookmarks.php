@@ -58,20 +58,7 @@ function sortItemsDir($items) {
 }
 
 /**
- * Render Dir Name
- *
- * @param string $name
- * @param string $linkItem relative path
- * @return string Html
- */
-function renderDirName($name, $linkItem) {
-    $arrayDepth = explode ('/', str_replace(DIR, "", $linkItem));
-    $depth = sizeof($arrayDepth);
-    echo '<h'.$depth.'>'.$name.'</h'.$depth.'>';
-}
-
-/**
- * Clean Filename
+ * Clean File name
  *
  * @param string $name name
  * @return string name or void
