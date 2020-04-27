@@ -9,8 +9,7 @@ a {
   text-decoration: none;
 }
 a:hover , a:active {
-  /*text-decoration: underline;*/
-  text-shadow: 1px 0 black;
+  text-decoration: underline;
 }
 ul, li {
   list-style: none;
