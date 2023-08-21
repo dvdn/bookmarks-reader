@@ -11,6 +11,6 @@
         include('inc/bookmarks.php');
         viewTree();
       ?>
-    <footer>2020 // source code <a target="_blank" href="https://github.com/dvdn/bookmarks-reader">dvdn/bookmarks-reader</a></footer>
+    <footer>source code <a target="_blank" href="https://github.com/dvdn/bookmarks-reader">dvdn/bookmarks-reader</a></footer>
   </body>
 </html>
